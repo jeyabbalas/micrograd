@@ -5,5 +5,5 @@ A minimalistic automatic differentiation engine. This repository follows Andrej 
 ## Installation
 
 ```bash
-pip install git++https://github.com/jeyabbalas/micrograd.git
+pip install git+https://github.com/jeyabbalas/micrograd.git
 ```
