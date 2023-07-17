@@ -23,6 +23,7 @@ class Value:
 
     def __init__(self, data, children=(), op='', label=''):
         self.data = data
+        self.grad = 0.0
         self.children = set(children)
         self.op = op
         self.label = label
@@ -36,6 +37,13 @@ class Value:
 
     def __mul__(self, other):
         out = Value(self.data * other.data, (self, other), '*')
+        return out
+
+    def tanh(self):
+        import math
+        x = self.data
+        tanh_x = (math.exp(2*x) - 1) / (math.exp(2*x) + 1)
+        out = Value(tanh_x, (self, ), 'tanh')
         return out
 
     def plot(self):
@@ -53,7 +61,8 @@ class Value:
             uid = str(id(node))
 
             # for values in the compute graph, draw a rectangular ('record') node
-            dot.node(name=uid, label=f"{{ {node.label} | data {node.data:.4f} }}", shape='record')
+            dot.node(name=uid,
+                     label=f"{{ {node.label} | data: {node.data:.4f} | grad: {node.grad:.4f} }}", shape='record')
 
             if node.op:
                 # for operations in the compute graph, additionally draw an elliptical node
