@@ -1,3 +1,6 @@
+import math
+
+
 def trace(root):
     """
     Trace all the nodes and edges in the graph starting at root
@@ -40,7 +43,6 @@ class Value:
         return out
 
     def tanh(self):
-        import math
         x = self.data
         tanh_x = (math.exp(2*x) - 1) / (math.exp(2*x) + 1)
         out = Value(tanh_x, (self, ), 'tanh')
