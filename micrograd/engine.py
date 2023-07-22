@@ -1,4 +1,5 @@
 import math
+# import sys
 
 
 def trace(root):
@@ -34,7 +35,7 @@ class Value:
         self._backward = lambda: None
 
     def __repr__(self):
-        return f"Value(data={self.data})"
+        return f"Value(data={self.data}, grad={self.grad})"
 
     def __add__(self, other):
         other = other if isinstance(other, Value) else Value(other)
@@ -94,7 +95,7 @@ class Value:
 
         def _backward():
             self.grad += other.data * self.data ** (other.data - 1) * out.grad
-            other.grad += math.log(self.data) * self.data ** other.data * out.grad
+            # other.grad += math.log(self.data + sys.float_info.epsilon) * self.data ** other.data * out.grad
         out._backward = _backward
 
         return out
